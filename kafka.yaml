@@ -1,0 +1,30 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: kafka
+  labels:
+    run: kafka
+  namespace: default
+  generation: 1
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      run: kafka
+  strategy:
+    rollingUpdate:
+      maxSurge: 1
+      maxUnavailable: 1
+    type: RollingUpdate
+  template:
+    metadata:
+      labels:
+        run: kafka
+    spec:
+      containers:
+      - name: kafka
+        image: registry:5000/kafka:latest
+        ports:
+      hostname: kafka
+      restartPolicy: Always
+      schedulerName: default-scheduler
